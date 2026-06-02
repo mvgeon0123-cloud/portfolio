@@ -188,3 +188,6 @@ footer a:hover{color:var(--ink2)}
 .prose pre,.editor .ProseMirror pre{background:#1d1d1f;color:#f5f5f7;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;line-height:1.6;padding:16px 18px;border-radius:12px;overflow-x:auto;margin:1.2em 0}
 .prose pre code,.editor .ProseMirror pre code{background:none;color:inherit;padding:0;font-size:inherit}
 .prose hr,.editor .ProseMirror hr{border:none;border-top:1px solid var(--hair);margin:1.6em 0}
+.prose img,.editor .ProseMirror img{max-width:100%;height:auto;border-radius:8px;margin:1.2em 0;display:block}
+.editor .ProseMirror img.ProseMirror-selectednode{outline:2px solid var(--ink2);outline-offset:2px}
+.tb-err{font-size:12px;color:#b3261e;align-self:center;padding:0 8px}

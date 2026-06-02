@@ -1,10 +1,15 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
+import Image from '@tiptap/extension-image';
+import { createClient } from '@/lib/supabase-browser';
 
 type Ed = NonNullable<ReturnType<typeof useEditor>>;
+
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
 
 function Btn({
   onClick,
@@ -35,16 +40,70 @@ function Btn({
 }
 
 function Toolbar({ editor }: { editor: Ed }) {
+  const [supabase] = useState(() => createClient());
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadErr, setUploadErr] = useState<string | null>(null);
+
   const setLink = () => {
     const prev = (editor.getAttributes('link').href as string | undefined) ?? 'https://';
     const url = window.prompt('링크 URL', prev);
-    if (url === null) return; // 취소
+    if (url === null) return;
     if (url.trim() === '') {
       editor.chain().focus().extendMarkRange('link').unsetLink().run();
       return;
     }
     editor.chain().focus().extendMarkRange('link').setLink({ href: url.trim() }).run();
   };
+
+  async function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // 같은 파일 다시 선택 가능하도록 리셋
+    if (!file) return;
+    setUploadErr(null);
+
+    if (!file.type.startsWith('image/')) {
+      setUploadErr('이미지 파일만 업로드할 수 있습니다.');
+      return;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      setUploadErr('이미지는 5MB 이하만 업로드할 수 있습니다.');
+      return;
+    }
+
+    setUploading(true);
+    // 로그인 사용자만 업로드 (Storage 정책상 강제되지만 UI에서도 확인)
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const user = session?.user;
+    if (!user) {
+      setUploading(false);
+      setUploadErr('로그인이 필요합니다.');
+      return;
+    }
+
+    // 충돌 방지 경로: <유저id>/<타임스탬프>-<안전한 파일명>
+    const safeName = (file.name || 'image')
+      .replace(/[^a-zA-Z0-9._-]/g, '_')
+      .replace(/_+/g, '_')
+      .slice(-80);
+    const path = `${user.id}/${Date.now()}-${safeName}`;
+
+    const { error: upErr } = await supabase.storage
+      .from('post-images')
+      .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type });
+
+    if (upErr) {
+      setUploading(false);
+      setUploadErr(`업로드 실패: ${upErr.message}`);
+      return;
+    }
+
+    const { data: pub } = supabase.storage.from('post-images').getPublicUrl(path);
+    editor.chain().focus().setImage({ src: pub.publicUrl }).run();
+    setUploading(false);
+  }
 
   return (
     <div className="editor-toolbar">
@@ -89,6 +148,11 @@ function Toolbar({ editor }: { editor: Ed }) {
         링크해제
       </Btn>
       <span className="tb-sep" />
+      <Btn label="이미지 업로드" disabled={uploading} onClick={() => fileRef.current?.click()}>
+        {uploading ? '업로드…' : '🖼 이미지'}
+      </Btn>
+      <input ref={fileRef} type="file" accept="image/*" hidden onChange={onPickImage} />
+      <span className="tb-sep" />
       <Btn label="왼쪽 정렬" active={editor.isActive({ textAlign: 'left' })} onClick={() => editor.chain().focus().setTextAlign('left').run()}>
         좌
       </Btn>
@@ -105,6 +169,7 @@ function Toolbar({ editor }: { editor: Ed }) {
       <Btn label="되돌리기" disabled={!editor.can().redo()} onClick={() => editor.chain().focus().redo().run()}>
         ↷
       </Btn>
+      {uploadErr && <span className="tb-err">{uploadErr}</span>}
     </div>
   );
 }
@@ -124,6 +189,7 @@ export default function Editor({ value, onChange }: { value: string; onChange: (
         },
       }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      Image, // 이미지 (Supabase Storage 공개 URL을 src로 삽입)
     ],
     content: value || '',
     editorProps: { attributes: { class: 'tiptap-content' } },

@@ -9,14 +9,17 @@ export const dynamic = 'force-dynamic';
 
 // 저장된 HTML은 표시 단계에서 반드시 sanitize (XSS 방지). 에디터가 만드는 태그/스타일만 허용.
 const SANITIZE_OPTS: sanitizeHtml.IOptions = {
-  allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 's', 'del', 'h1', 'h2', 'h3', 'blockquote', 'ul', 'ol', 'li', 'code', 'pre', 'a', 'hr'],
+  allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 's', 'del', 'h1', 'h2', 'h3', 'blockquote', 'ul', 'ol', 'li', 'code', 'pre', 'a', 'hr', 'img'],
   allowedAttributes: {
     a: ['href', 'target', 'rel'],
+    img: ['src', 'alt', 'title'],
     p: ['style'],
     h1: ['style'],
     h2: ['style'],
     h3: ['style'],
   },
+  // 이미지 src는 https/http 만 (data: 등 차단)
+  allowedSchemesByTag: { img: ['https', 'http'] },
   allowedStyles: {
     '*': { 'text-align': [/^(left|right|center|justify)$/] },
   },
