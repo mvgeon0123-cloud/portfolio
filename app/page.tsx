@@ -1,9 +1,25 @@
 import Nav from '@/components/Nav';
 import Signature from '@/components/Signature';
-import { columns } from '@/data/columns';
+import { supabase } from '@/lib/supabase';
 import { channels } from '@/data/channels';
 
-export default function Home() {
+// DB 변경이 최대 60초 안에 반영되도록 ISR 재검증
+export const revalidate = 60;
+
+type ColumnRow = { title: string; source: string; url: string };
+
+export default async function Home() {
+  // Supabase columns 테이블에서 sort_order 오름차순으로 조회
+  const { data, error } = await supabase
+    .from('columns')
+    .select('title, source, url')
+    .order('sort_order', { ascending: true });
+
+  if (error) {
+    console.error('[supabase] columns 조회 실패:', error.message);
+  }
+  const columns: ColumnRow[] = data ?? [];
+
   return (
     <>
       <Nav />
@@ -31,9 +47,9 @@ export default function Home() {
           <div className="list">
             {columns.map((col) => (
               <a
-                key={col.href}
+                key={col.url}
                 className="it"
-                href={col.href}
+                href={col.url}
                 target="_blank"
                 rel="noopener"
               >
