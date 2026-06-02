@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-browser';
+import Editor from './Editor';
 
 type Status = 'loading' | 'guest' | 'forbidden' | 'ready';
 
@@ -70,7 +71,8 @@ export default function WriteForm({ editId }: { editId: string | null }) {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    if (!title.trim() || !body.trim()) {
+    const bodyText = body.replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, ' ').trim();
+    if (!title.trim() || !bodyText) {
       setError('제목과 본문을 모두 입력해 주세요.');
       return;
     }
@@ -158,16 +160,10 @@ export default function WriteForm({ editId }: { editId: string | null }) {
             maxLength={200}
           />
         </label>
-        <label className="comm-field">
+        <div className="comm-field">
           <span>본문</span>
-          <textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-            rows={14}
-            placeholder="내용을 입력하세요. 줄바꿈은 그대로 표시됩니다."
-          />
-        </label>
+          <Editor value={body} onChange={setBody} />
+        </div>
         {error && <p className="auth-msg err">{error}</p>}
         <div className="comm-form-actions">
           <button className="auth-btn comm-submit" type="submit" disabled={busy}>

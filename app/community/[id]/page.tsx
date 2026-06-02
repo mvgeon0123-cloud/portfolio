@@ -1,10 +1,30 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import sanitizeHtml from 'sanitize-html';
 import { supabase } from '@/lib/supabase';
 import PostActions from '@/components/community/PostActions';
 
 // 동적 라우트 — 항상 최신 글 표시(수정 직후 반영) + 정적 파라미터 수집 워커 비활성(dev 노이즈 제거)
 export const dynamic = 'force-dynamic';
+
+// 저장된 HTML은 표시 단계에서 반드시 sanitize (XSS 방지). 에디터가 만드는 태그/스타일만 허용.
+const SANITIZE_OPTS: sanitizeHtml.IOptions = {
+  allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 's', 'del', 'h1', 'h2', 'h3', 'blockquote', 'ul', 'ol', 'li', 'code', 'pre', 'a', 'hr'],
+  allowedAttributes: {
+    a: ['href', 'target', 'rel'],
+    p: ['style'],
+    h1: ['style'],
+    h2: ['style'],
+    h3: ['style'],
+  },
+  allowedStyles: {
+    '*': { 'text-align': [/^(left|right|center|justify)$/] },
+  },
+  allowedSchemes: ['http', 'https', 'mailto'],
+  transformTags: {
+    a: sanitizeHtml.simpleTransform('a', { rel: 'noopener noreferrer nofollow', target: '_blank' }),
+  },
+};
 
 function formatDate(iso: string) {
   const d = new Date(iso);
@@ -32,6 +52,10 @@ export default async function PostDetailPage({ params }: { params: { id: string 
     if (prof?.nickname) nickname = prof.nickname;
   }
 
+  // 과거 평문 글 호환: HTML 태그가 있으면 sanitize 후 렌더, 없으면 평문(줄바꿈 보존)으로 표시.
+  const rawBody = post.body ?? '';
+  const looksHtml = /<\/?[a-z][^>]*>/i.test(rawBody);
+
   return (
     <main className="comm-wrap">
       <header className="comm-head">
@@ -42,8 +66,14 @@ export default async function PostDetailPage({ params }: { params: { id: string 
         <p className="post-meta">
           {nickname} · {formatDate(post.created_at)}
         </p>
-        {/* 본문: 지금은 일반 텍스트, 줄바꿈 보존(white-space:pre-wrap). 리치 서식은 다음 단계. */}
-        <div className="post-body">{post.body}</div>
+        {looksHtml ? (
+          <div
+            className="prose"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(rawBody, SANITIZE_OPTS) }}
+          />
+        ) : (
+          <div className="post-body">{rawBody}</div>
+        )}
       </article>
       <PostActions postId={post.id} authorId={post.author_id} />
       <Link className="comm-back" href="/community">
