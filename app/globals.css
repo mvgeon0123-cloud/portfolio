@@ -66,3 +66,28 @@ footer{border-top:1px solid var(--hair)}
 footer .in{max-width:1000px;margin:0 auto;padding:24px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
 footer a{font-size:12px;color:var(--ink3);text-decoration:none}
 footer a:hover{color:var(--ink2)}
+
+/* ---------- /admin (관리자) — 기존 변수로 통일, 실용 폼 위주 ---------- */
+.admin-wrap{max-width:780px;margin:0 auto;padding:56px 24px 100px}
+.admin-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+.admin-head h1{font-size:clamp(24px,3.2vw,34px);font-weight:600;letter-spacing:-.025em}
+.admin-muted{color:var(--ink3);font-size:13px;margin-bottom:14px}
+.admin-h2{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:10px 0 16px}
+.admin-error{color:#b3261e;background:#fdecea;border:1px solid #f3c0bb;border-radius:12px;padding:11px 14px;font-size:14px;margin:0 0 16px;white-space:pre-wrap;word-break:break-word}
+.admin-card{background:var(--bg2);border:1px solid var(--hair);border-radius:var(--r);padding:24px;margin-bottom:30px}
+.admin-card h2{font-size:17px;font-weight:600;margin-bottom:16px}
+.admin-field{display:block;margin-bottom:14px}
+.admin-field span{display:block;font-size:12px;color:var(--ink2);margin-bottom:6px}
+.admin-wrap input{width:100%;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--hair);border-radius:10px;background:var(--bg);color:var(--ink);transition:border-color .2s}
+.admin-wrap input:focus{outline:none;border-color:var(--ink2)}
+.admin-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+@media(min-width:640px){.admin-grid{grid-template-columns:2fr 1.2fr 2.4fr .8fr}}
+.admin-btn{display:inline-block;background:var(--ink);color:#fff;border:none;font:inherit;font-size:15px;font-weight:500;padding:11px 24px;border-radius:980px;cursor:pointer;transition:opacity .2s,transform .2s}
+.admin-btn:hover{opacity:.9;transform:translateY(-1px)}
+.admin-btn:disabled{opacity:.45;cursor:default;transform:none}
+.admin-btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair);padding:9px 18px;font-size:13px}
+.admin-btn.small{padding:7px 16px;font-size:13px}
+.admin-btn.danger{background:transparent;color:#b3261e;border:1px solid #e6b4ae}
+.admin-list{display:flex;flex-direction:column;gap:14px}
+.admin-row{border:1px solid var(--hair);border-radius:14px;padding:16px;background:var(--bg)}
+.admin-row-actions{display:flex;gap:8px;margin-top:12px}
