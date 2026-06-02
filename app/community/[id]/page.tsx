@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import PostActions from '@/components/community/PostActions';
 
-export const revalidate = 30;
+// 동적 라우트 — 항상 최신 글 표시(수정 직후 반영) + 정적 파라미터 수집 워커 비활성(dev 노이즈 제거)
+export const dynamic = 'force-dynamic';
 
 function formatDate(iso: string) {
   const d = new Date(iso);
@@ -43,6 +45,7 @@ export default async function PostDetailPage({ params }: { params: { id: string 
         {/* 본문: 지금은 일반 텍스트, 줄바꿈 보존(white-space:pre-wrap). 리치 서식은 다음 단계. */}
         <div className="post-body">{post.body}</div>
       </article>
+      <PostActions postId={post.id} authorId={post.author_id} />
       <Link className="comm-back" href="/community">
         ← 목록으로
       </Link>

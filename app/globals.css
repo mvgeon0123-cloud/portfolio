@@ -139,3 +139,20 @@ footer a:hover{color:var(--ink2)}
 .post-body{font-size:16px;line-height:1.75;color:var(--ink);white-space:pre-wrap;word-break:break-word}
 .comm-back{display:inline-block;margin-top:36px;font-size:14px;color:var(--ink2);text-decoration:none}
 .comm-back:hover{color:var(--ink);text-decoration:underline}
+.comm-muted{color:var(--ink3);font-size:14px;padding:40px 0}
+.comm-form{display:flex;flex-direction:column;gap:18px}
+.comm-field{display:flex;flex-direction:column;gap:7px}
+.comm-field span{font-size:12px;color:var(--ink2)}
+.comm-wrap input[type="text"],.comm-wrap textarea{width:100%;font:inherit;font-size:15px;padding:12px 14px;border:1px solid var(--hair);border-radius:12px;background:var(--bg);color:var(--ink);transition:border-color .2s}
+.comm-wrap textarea{resize:vertical;line-height:1.7;min-height:240px}
+.comm-wrap input[type="text"]:focus,.comm-wrap textarea:focus{outline:none;border-color:var(--ink2)}
+.comm-form-actions{display:flex;align-items:center;gap:16px;margin-top:4px}
+.comm-submit{width:auto;margin-top:0;padding:12px 28px}
+.comm-cancel{font-size:14px;color:var(--ink2);text-decoration:none}
+.comm-cancel:hover{color:var(--ink);text-decoration:underline}
+.post-actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.post-act{font:inherit;font-size:14px;font-weight:500;padding:8px 16px;border-radius:980px;text-decoration:none;cursor:pointer;border:1px solid var(--hair);background:var(--bg);color:var(--ink);transition:border-color .2s}
+.post-act:hover{border-color:var(--ink2)}
+.post-act.danger{color:#b3261e;border-color:#e6b4ae;background:transparent}
+.post-act:disabled{opacity:.45;cursor:default}
+.post-err{margin-top:12px}
