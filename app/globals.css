@@ -91,3 +91,30 @@ footer a:hover{color:var(--ink2)}
 .admin-list{display:flex;flex-direction:column;gap:14px}
 .admin-row{border:1px solid var(--hair);border-radius:14px;padding:16px;background:var(--bg)}
 .admin-row-actions{display:flex;gap:8px;margin-top:12px}
+
+/* ---------- 인증 (/login, /signup) ---------- */
+.auth-wrap{max-width:400px;margin:0 auto;padding:72px 24px 100px;min-height:72vh}
+.auth-home{display:inline-block;font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--ink);text-decoration:none;margin-bottom:36px}
+.auth-wrap h1{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.auth-sub{color:var(--ink2);font-size:14px;margin-bottom:26px}
+.auth-form{display:flex;flex-direction:column;gap:14px}
+.auth-field{display:flex;flex-direction:column;gap:6px}
+.auth-field span{font-size:12px;color:var(--ink2)}
+.auth-wrap input{width:100%;font:inherit;font-size:15px;padding:12px 14px;border:1px solid var(--hair);border-radius:12px;background:var(--bg);color:var(--ink);transition:border-color .2s}
+.auth-wrap input:focus{outline:none;border-color:var(--ink2)}
+.auth-btn{width:100%;margin-top:6px;background:var(--ink);color:#fff;border:none;font:inherit;font-size:16px;font-weight:500;padding:13px;border-radius:980px;cursor:pointer;transition:opacity .2s,transform .2s}
+.auth-btn:hover{opacity:.92;transform:translateY(-1px)}
+.auth-btn:disabled{opacity:.45;cursor:default;transform:none}
+.auth-msg{font-size:14px;line-height:1.55;padding:12px 14px;border-radius:12px}
+.auth-msg.err{color:#b3261e;background:#fdecea;border:1px solid #f3c0bb}
+.auth-msg.ok{color:#1d6f42;background:#e9f7ef;border:1px solid #b6e0c6}
+.auth-inline,.auth-msg a{color:inherit;font-weight:600;text-decoration:underline}
+.auth-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px}
+.auth-links a,.auth-link{font:inherit;font-size:13px;color:var(--ink2);text-decoration:none;background:none;border:none;padding:0;cursor:pointer}
+.auth-links a:hover,.auth-link:hover{color:var(--ink);text-decoration:underline}
+
+/* 네비 인증 상태 */
+.nav-user{font-size:13px;color:var(--ink3);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-auth-btn{font:inherit;font-size:13px;color:var(--ink2);background:none;border:none;padding:0;cursor:pointer;transition:color .2s}
+.nav-auth-btn:hover{color:var(--ink)}
+@media(max-width:520px){.nav-user{display:none}}
