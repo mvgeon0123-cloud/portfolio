@@ -6,13 +6,21 @@ import PostActions from '@/components/community/PostActions';
 
 // 동적 라우트 — 항상 최신 글 표시(수정 직후 반영) + 정적 파라미터 수집 워커 비활성(dev 노이즈 제거)
 export const dynamic = 'force-dynamic';
+// supabase fetch가 Next Data Cache에 캐시돼 수정/삭제 후 stale하게 보이는 것 방지(항상 fresh)
+export const fetchCache = 'force-no-store';
 
 // 저장된 HTML은 표시 단계에서 반드시 sanitize (XSS 방지). 에디터가 만드는 태그/스타일만 허용.
 const SANITIZE_OPTS: sanitizeHtml.IOptions = {
-  allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 's', 'del', 'h1', 'h2', 'h3', 'blockquote', 'ul', 'ol', 'li', 'code', 'pre', 'a', 'hr', 'img'],
+  allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 's', 'del', 'h1', 'h2', 'h3', 'blockquote', 'ul', 'ol', 'li', 'code', 'pre', 'a', 'hr', 'img', 'figure', 'figcaption', 'span', 'mark', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
   allowedAttributes: {
-    a: ['href', 'target', 'rel'],
-    img: ['src', 'alt', 'title'],
+    a: ['href', 'target', 'rel', 'class'],
+    img: ['src', 'alt', 'title', 'style'],
+    figure: ['style'],
+    span: ['style', 'class'],
+    mark: ['style', 'data-color'],
+    th: ['colspan', 'rowspan', 'style'],
+    td: ['colspan', 'rowspan', 'style'],
+    table: ['style'],
     p: ['style'],
     h1: ['style'],
     h2: ['style'],
@@ -20,8 +28,14 @@ const SANITIZE_OPTS: sanitizeHtml.IOptions = {
   },
   // 이미지 src는 https/http 만 (data: 등 차단)
   allowedSchemesByTag: { img: ['https', 'http'] },
+  // style은 레이아웃 관련(text-align/width)만 허용 — 위험한 속성 차단(XSS 방지)
   allowedStyles: {
-    '*': { 'text-align': [/^(left|right|center|justify)$/] },
+    '*': {
+      'text-align': [/^(left|right|center|justify)$/],
+      width: [/^\d+(\.\d+)?(px|%)$/],
+      color: [/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/, /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/, /^rgba\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*(?:0|1|0?\.\d+)\s*\)$/, /^[a-zA-Z]+$/],
+      'background-color': [/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/, /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/, /^rgba\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*(?:0|1|0?\.\d+)\s*\)$/, /^[a-zA-Z]+$/],
+    },
   },
   allowedSchemes: ['http', 'https', 'mailto'],
   transformTags: {
