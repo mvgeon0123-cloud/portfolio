@@ -118,3 +118,24 @@ footer a:hover{color:var(--ink2)}
 .nav-auth-btn{font:inherit;font-size:13px;color:var(--ink2);background:none;border:none;padding:0;cursor:pointer;transition:color .2s}
 .nav-auth-btn:hover{color:var(--ink)}
 @media(max-width:520px){.nav-user{display:none}}
+
+/* ---------- 커뮤니티 (/community) ---------- */
+.comm-wrap{max-width:720px;margin:0 auto;padding:56px 24px 100px;min-height:72vh}
+.comm-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:30px}
+.comm-home{font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--ink);text-decoration:none}
+.comm-write-btn{background:var(--ink);color:#fff;text-decoration:none;font-size:14px;font-weight:500;padding:9px 18px;border-radius:980px;transition:opacity .2s,transform .2s}
+.comm-write-btn:hover{opacity:.9;transform:translateY(-1px)}
+.comm-title{font-size:clamp(26px,3.5vw,38px);font-weight:600;letter-spacing:-.025em;margin-bottom:24px}
+.comm-empty{color:var(--ink3);font-size:15px;padding:48px 0;text-align:center;border-top:1px solid var(--hair)}
+.comm-list{list-style:none;display:flex;flex-direction:column}
+.comm-item{display:flex;flex-direction:column;gap:7px;padding:22px 4px;border-top:1px solid var(--hair);text-decoration:none;color:inherit}
+.comm-list li:last-child .comm-item{border-bottom:1px solid var(--hair)}
+.comm-item-title{font-size:clamp(17px,2vw,21px);font-weight:600;letter-spacing:-.01em;line-height:1.35;background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--e)}
+.comm-item:hover .comm-item-title{background-size:100% 1px}
+.comm-item-meta{font-size:13px;color:var(--ink3)}
+.post{padding:6px 0 16px}
+.post-title{font-size:clamp(24px,3.4vw,34px);font-weight:600;letter-spacing:-.02em;line-height:1.22;margin-bottom:14px}
+.post-meta{font-size:13px;color:var(--ink3);margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--hair)}
+.post-body{font-size:16px;line-height:1.75;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+.comm-back{display:inline-block;margin-top:36px;font-size:14px;color:var(--ink2);text-decoration:none}
+.comm-back:hover{color:var(--ink);text-decoration:underline}

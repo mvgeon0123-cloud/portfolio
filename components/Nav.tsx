@@ -37,6 +37,7 @@ export default function Nav() {
           <a href="#columns">Column</a>
           <a href="#channels">Instagram</a>
           <a href="#contact">Contact</a>
+          <a href="/community">Community</a>
           {user ? (
             <>
               <span className="nav-user" title={user.email ?? ''}>
