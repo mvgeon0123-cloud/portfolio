@@ -3,6 +3,10 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: '이동건',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export default function RootLayout({
