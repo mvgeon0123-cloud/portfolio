@@ -1,14 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import type { User } from '@supabase/supabase-js';
-import { createClient } from '@/lib/supabase-browser';
+import { useEffect, useRef } from 'react';
 
 // index.html <script>: addEventListener('scroll', () => n.classList.toggle('on', scrollY > 8))
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
-  const [supabase] = useState(() => createClient());
-  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -18,14 +14,6 @@ export default function Nav() {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, [supabase]);
 
   return (
     <nav id="nav" ref={navRef}>
@@ -37,6 +25,7 @@ export default function Nav() {
           <a href="#columns">Column</a>
           <a href="#channels">Instagram</a>
           <a href="#contact">Contact</a>
+          {/* 커뮤니티·로그인 진입점은 숨김 처리(라우트/페이지는 유지). 필요 시 아래 복구.
           <a href="/community">Community</a>
           {user ? (
             <>
@@ -49,7 +38,7 @@ export default function Nav() {
             </>
           ) : (
             <a href="/login">로그인</a>
-          )}
+          )} */}
         </div>
       </div>
     </nav>
