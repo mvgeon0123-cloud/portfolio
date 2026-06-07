@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '이동건',
+  title: 'xiln3k',
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',

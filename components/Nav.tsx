@@ -18,8 +18,11 @@ export default function Nav() {
   return (
     <nav id="nav" ref={navRef}>
       <div className="in">
-        <a href="#top" className="nm">
-          이동건
+        <a href="#top" className="nm" aria-label="홈">
+          {/* 로고/이름 텍스트는 숨김 처리(자리는 유지). 필요 시 아래 글자만 노출하면 됨. */}
+          <span style={{ visibility: 'hidden' }} aria-hidden="true">
+            이동건
+          </span>
         </a>
         <div className="lk">
           <a href="#columns">Column</a>
