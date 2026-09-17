@@ -6,6 +6,11 @@ export type Column = {
 
 export const columns: Column[] = [
   {
+    title: '여전히 보호받지 못하는 소년들',
+    source: 'Yagongso / 이동건',
+    url: 'https://yagongso.com/boys-who-still-are-not-protected/',
+  },
+  {
     title: '정말 어깨는 쓸수록 약해질까?',
     source: 'Yagongso / 이동건',
     url: 'https://yagongso.com/does-the-shoulder-really-get-weaker-the-more-you-use-it/',
