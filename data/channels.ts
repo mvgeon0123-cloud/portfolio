@@ -19,4 +19,10 @@ export const channels: Channel[] = [
     pfp: '/pfp-itsjustplaying.png',
     alt: '@itsjustplaying',
   },
+  {
+    handle: '@xiln3k',
+    href: 'https://instagram.com/xiln3k',
+    pfp: '/pfp-xiln3k.jpg',
+    alt: '@xiln3k',
+  },
 ];
