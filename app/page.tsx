@@ -86,6 +86,7 @@ export default function Home() {
               이메일 보내기
             </a>
             <div className="more">
+              <span className="u">mvgeon0123@naver.com</span>
               <a className="u" href="https://instagram.com/xiln3k" target="_blank" rel="noopener">
                 Instagram · @xiln3k
               </a>

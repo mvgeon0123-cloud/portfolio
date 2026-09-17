@@ -60,7 +60,7 @@ nav .lk a:hover{color:var(--ink)}
 .contact{padding:118px 0 100px;text-align:center}
 .contact h2{font-size:clamp(36px,5.5vw,60px);font-weight:600;letter-spacing:-.025em;line-height:1.08;margin-bottom:30px}
 .contact .more{margin-top:30px;display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
-.contact .more a{font-size:14px;color:var(--ink2);text-decoration:none}
+.contact .more a,.contact .more span{font-size:14px;color:var(--ink2);text-decoration:none}
 
 footer{border-top:1px solid var(--hair)}
 footer .in{max-width:1000px;margin:0 auto;padding:24px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
