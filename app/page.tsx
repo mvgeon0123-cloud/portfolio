@@ -75,7 +75,7 @@ export default function Home() {
                 <h3>{ch.handle}</h3>
                 <div className="lk-w">
                   <a className="arrow" href={ch.href} target="_blank" rel="noopener">
-                    Instagram에서 보기 <span className="c">›</span>
+                    Instagram <span className="c">›</span>
                   </a>
                 </div>
               </article>
