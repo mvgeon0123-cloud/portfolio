@@ -14,12 +14,6 @@ export const channels: Channel[] = [
     alt: '@foreverdinos',
   },
   {
-    handle: '@itsjustplaying',
-    href: 'https://instagram.com/itsjustplaying',
-    pfp: '/pfp-itsjustplaying.png',
-    alt: '@itsjustplaying',
-  },
-  {
     handle: '@xiln3k',
     href: 'https://instagram.com/xiln3k',
     pfp: '/pfp-xiln3k.jpg',

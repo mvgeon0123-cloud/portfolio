@@ -27,6 +27,7 @@ export default function Nav() {
         <div className="lk">
           <a href="#columns">Column</a>
           <a href="#channels">Instagram</a>
+          <a href="#career">Career</a>
           <a href="#contact">Contact</a>
           {/* 커뮤니티·로그인 진입점은 숨김 처리(라우트/페이지는 유지). 필요 시 아래 복구.
           <a href="/community">Community</a>

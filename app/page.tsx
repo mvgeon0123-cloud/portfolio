@@ -2,6 +2,7 @@ import Nav from '@/components/Nav';
 import Signature from '@/components/Signature';
 import { channels } from '@/data/channels';
 import { columns } from '@/data/columns';
+import { career } from '@/data/career';
 
 export default function Home() {
   return (
@@ -17,6 +18,9 @@ export default function Home() {
             </a>
             <a className="arrow" href="#channels">
               Instagram <span className="c">›</span>
+            </a>
+            <a className="arrow" href="#career">
+              Career <span className="c">›</span>
             </a>
             <a className="arrow" href="#contact">
               Contact <span className="c">›</span>
@@ -79,6 +83,37 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="career">
+          <div className="intro">
+            <h2>Career</h2>
+          </div>
+          <div className="list">
+            {career.map((c) => {
+              const inner = (
+                <>
+                  <div>
+                    <div className="ti">{c.title}</div>
+                    {c.org || c.note ? (
+                      <div className="src">
+                        {[c.org, c.note].filter(Boolean).join(' · ')}
+                      </div>
+                    ) : null}
+                  </div>
+                </>
+              );
+              return c.url ? (
+                <a key={c.title} className="it" href={c.url} target="_blank" rel="noopener">
+                  {inner}
+                </a>
+              ) : (
+                <div key={c.title} className="it">
+                  {inner}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
         <section className="contact" id="contact">
           <div className="wrap">
             <h2>Contact</h2>
@@ -99,6 +134,7 @@ export default function Home() {
         <div className="in">
           <a href="#columns">Column</a>
           <a href="#channels">Instagram</a>
+          <a href="#career">Career</a>
           <a href="#contact">Contact</a>
         </div>
       </footer>
