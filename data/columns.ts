@@ -6,6 +6,11 @@ export type Column = {
 
 export const columns: Column[] = [
   {
+    title: '흔들리는 구원 투수, 지켜봐도 될까',
+    source: 'Yagongso / 이동건',
+    url: 'https://yagongso.com/shaky-pitcher-change/',
+  },
+  {
     title: '여전히 보호받지 못하는 소년들',
     source: 'Yagongso / 이동건',
     url: 'https://yagongso.com/boys-who-still-are-not-protected/',
